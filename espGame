@@ -1,0 +1,114 @@
+//Class: CMSC203 
+//  Instructor: Grigoriy Grinberg
+//  Description: ESP GAME
+//  Due: 06/16/2025
+//  Platform/compiler: ECLIPSE
+ // I pledge that I have completed the programming assignment 
+// independently. I have not copied the code from a student or   * any source. I have not given my code to any student.
+//  WAYNE WILLIS
+
+
+
+
+package espGameProject;
+
+public class espGame {
+	
+	   public static void main(String[] args) 
+	   {
+	        
+		   
+		   
+		   //list of colors 
+		   final String COLOR1 = "Black";
+	        final String COLOR2 = "White";
+	        final String COLOR3 = "Red";
+	        final String COLOR4 = "Blue";
+	        final String COLOR5 = "Green";
+	        final String COLOR6 = "Yellow";
+	        final String COLOR7 = "Purple";
+	        final String COLOR8 = "Orange";
+	        final String COLOR9 = "Pink";
+	        final String COLOR10 = "Brown";
+	        final String COLOR11 = "Gray";
+	        final String COLOR12 = "Cyan";
+	        final String COLOR13 = "Magenta";
+	        final String COLOR14 = "Beige";
+	        final String COLOR15 = "Lime";
+	        final String COLOR16 = "Teal";
+
+	        java.util.Scanner input = new java.util.Scanner(System.in);
+
+	        System.out.println("Available colors:");
+	        
+	        System.out.println(COLOR1 + "/ " + COLOR2 + "/ " + COLOR3 + "/ " + COLOR4 + "/ " + COLOR5);
+	        
+	        System.out.println(COLOR6 + "/ " + COLOR7 + "/ " + COLOR8 + "/ " + COLOR9 + "/ " + COLOR10);
+	        
+	        System.out.println(COLOR11 + "/ " + COLOR12 + "/ " + COLOR13 + "/ " + COLOR14 + "/ " + COLOR15 + "/ " + COLOR16);
+
+	        
+	        
+	        
+	        
+	        //calculate how many guess were correct or not
+	        
+	        int correct = 0;
+
+	        for (int i = 1; i <= 3; i++) {
+	            int rand = (int)(Math.random() * 16) + 1;
+	            String selectedColor = "";
+
+	            if (rand == 1) selectedColor = COLOR1;
+	            else if (rand == 2) selectedColor = COLOR2;
+	            else if (rand == 3) selectedColor = COLOR3;
+	            else if (rand == 4) selectedColor = COLOR4;
+	            else if (rand == 5) selectedColor = COLOR5;
+	            else if (rand == 6) selectedColor = COLOR6;
+	            else if (rand == 7) selectedColor = COLOR7;
+	            else if (rand == 8) selectedColor = COLOR8;
+	            else if (rand == 9) selectedColor = COLOR9;
+	            else if (rand == 10) selectedColor = COLOR10;
+	            else if (rand == 11) selectedColor = COLOR11;
+	            else if (rand == 12) selectedColor = COLOR12;
+	            else if (rand == 13) selectedColor = COLOR13;
+	            else if (rand == 14) selectedColor = COLOR14;
+	            else if (rand == 15) selectedColor = COLOR15;
+	            else if (rand == 16) selectedColor = COLOR16;
+
+	            System.out.print("\nRound " + i + " - Guess the color: ");
+	            String guess = input.nextLine();
+
+	            if (guess.equalsIgnoreCase(selectedColor)) {
+	                System.out.println("Correct!");
+	                correct++;
+	            } else {
+	                System.out.println("Wrong! The correct color was: " + selectedColor);
+	            }
+	        }
+
+	       
+	        
+	        //ending of the game and results 
+	        
+	        System.out.print("\nEnter your name: ");
+	        String name = input.nextLine();
+
+	        System.out.print("Enter a short description of yourself: ");
+	        String description = input.nextLine();
+
+	        System.out.print("Enter due date (MM/DD/YY): ");
+	        String dueDate = input.nextLine();
+
+	        System.out.println("\nGame Over");
+	        System.out.println("You guessed " + correct + " out of 3 colors correctly.");
+	        System.out.println("Due Date: " + dueDate);
+	        System.out.println("Username: " + name);
+	        System.out.println("User Description: " + description);
+	        System.out.println("Date: " + dueDate);
+
+	        input.close();
+	    }
+	  
+	}
+
