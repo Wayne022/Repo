@@ -1,0 +1,351 @@
+package circus;
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+
+
+
+
+public class CircusDriverApp {
+
+	public static void main(String[] args) {
+		
+		
+		Circus circus = new Circus();
+        Scanner scanner = new Scanner(System.in);
+        boolean exit = false;
+
+        System.out.println("Welcome to Bob's Circus Management System!");
+
+        while (!exit) {
+            try {
+                // Display menu
+                System.out.println("\nMenu:");
+                System.out.println("1. Add Animal");
+                System.out.println("2. Add Person");
+                System.out.println("3. Add Building");
+                System.out.println("4. Generate Ticket");
+                System.out.println("5. Display All Animals");
+                System.out.println("6. Display All Persons");
+                System.out.println("7. Display All Buildings");
+                System.out.println("8. Sort Animals by Age");
+                System.out.println("9. Sort Animals by Name");
+                System.out.println("10. Search Animal by Name");
+                System.out.println("11. Exit\n");
+
+                System.out.print("Choose an option: ");
+              
+                // Use validateInput method
+                int choice = 0;
+                boolean validInput = false;
+
+                // Retry until valid input is received
+                while (!validInput) {
+                    try {choice = validateInput(scanner);
+                    validInput = true;
+                } catch (InputMismatchException e) {
+                    System.out.println(e.getMessage());
+                    System.out.print("Please try again: ");
+                }
+                }
+   
+
+                switch (choice) {
+                    case 1:
+                        handleAddAnimal(circus, scanner);
+                        break;
+                    case 2:
+                        handleAddPerson(circus, scanner);
+                        break;
+                    case 3:
+                        handleAddBuilding(circus, scanner);
+                        break;
+                    case 4:
+                        handleGenerateTicket(scanner);
+                        break;
+                    case 5:
+                        System.out.println("Displaying all animals:");
+                        System.out.println("----------------------");
+                        circus.displayAllAnimals();
+                        break;
+                    case 6:
+                        System.out.println("Displaying all persons:");
+                        System.out.println("----------------------");
+                        circus.displayAllPersons();
+                        break;
+                    case 7:
+                        System.out.println("Displaying all buildings:");
+                        System.out.println("------------------------");
+                        circus.displayAllBuildings();
+                        break;
+                    case 8:
+                        System.out.println("Sorting animals by age...");
+                        circus.sortAnimalsByAge();
+                        System.out.println("Animals sorted by age.");
+                        break;
+                    case 9:
+                        System.out.println("Sorting animals by name...");
+                        circus.sortAnimalsByName();
+                        System.out.println("Animals sorted by name.");
+                        break;                       
+                    case 10:
+                        System.out.print("Enter the name of the animal to search: ");
+                        scanner.nextLine(); // Consume the leftover newline
+                        String searchName = scanner.nextLine();
+                        circus.searchAnimalByName(searchName);
+                        break;
+                    case 11:
+                        exit = true;
+                        System.out.println("Exiting Bob's Circus Management System. Goodbye!\n");
+                        break;
+                    default:
+                        System.out.println("Invalid option. Please choose again.");
+                }
+       
+                } catch (Exception e) {
+		            System.out.println("An unexpected error occurred: " + e.getMessage());
+		            e.printStackTrace();
+                } 
+            
+        }
+
+        scanner.close();
+    }
+
+    
+	private static int validateInput(Scanner scanner) throws InputMismatchException {
+        try {
+            return scanner.nextInt();
+        } catch (InputMismatchException e) {
+            scanner.nextLine();
+            throw new InputMismatchException("Invalid input. Please enter a number.");
+        }
+    }
+
+    
+	 private static void handleAddAnimal(Circus circus, Scanner scanner) {
+	        scanner.nextLine(); // consume newline
+
+	        System.out.println("Choose Animal Type:");
+	        System.out.println("1. Dog\n2. Horse\n3. Bird\n4. Lion");
+	        System.out.print("Enter choice: ");
+	        int type = scanner.nextInt();
+	        scanner.nextLine();
+
+	        System.out.print("Enter name: ");
+	        String name = scanner.nextLine();
+
+	        System.out.print("Enter age: ");
+	        int age = scanner.nextInt();
+	        scanner.nextLine();
+
+	        switch (type) {
+	            case 1:
+	                System.out.print("Enter breed: ");
+	                circus.addAnimal(new Dog(name, age, scanner.nextLine()));
+	                break;
+	            case 2:
+	                System.out.print("Enter breed: ");
+	                circus.addAnimal(new Horse(name, age, scanner.nextLine()));
+	                break;
+	            case 3:
+	                System.out.print("Enter species: ");
+	                String species = scanner.nextLine();
+	                System.out.print("Enter color: ");
+	                circus.addAnimal(new Bird(name, age, species, scanner.nextLine()));
+	                break;
+	            case 4:
+	                System.out.print("Enter mane color: ");
+	                circus.addAnimal(new Lion(name, age, scanner.nextLine()));
+	                break;
+	            default:
+	                System.out.println("Invalid animal type.");
+	        }
+	    }
+
+	    // -----------------------------------------------------------------
+	    // ADD PERSON
+	    // -----------------------------------------------------------------
+	    private static void handleAddPerson(Circus circus, Scanner scanner) {
+	        scanner.nextLine();
+
+	        System.out.println("Choose Person Type:");
+	        System.out.println("1. Clerk\n2. Acrobatic");
+	        System.out.print("Enter choice: ");
+	        int type = scanner.nextInt();
+	        scanner.nextLine();
+
+	        System.out.print("Enter name: ");
+	        String name = scanner.nextLine();
+
+	        System.out.print("Enter age: ");
+	        int age = scanner.nextInt();
+	        scanner.nextLine();
+
+	        System.out.print("Enter years worked: ");
+	        int yearsWorked = scanner.nextInt();
+	        scanner.nextLine();
+
+	        if (type == 1) {
+	            System.out.print("Enter job title: ");
+	            circus.addPerson(new Clerk(name, age, yearsWorked, scanner.nextLine()));
+	        } else if (type == 2) {
+	            System.out.print("Enter specialty: ");
+	            circus.addPerson(new Acrobatic(name, age, yearsWorked, scanner.nextLine()));
+	        } else {
+	            System.out.println("Invalid person type.");
+	        }
+	    }
+
+	    // -----------------------------------------------------------------
+	    // ADD BUILDING
+	    // -----------------------------------------------------------------
+	    private static void handleAddBuilding(Circus circus, Scanner scanner) {
+	        scanner.nextLine();
+
+	        System.out.println("Choose Building Type:");
+	        System.out.println("1. Arena\n2. Ticketing Office");
+	        System.out.print("Enter choice: ");
+	        int type = scanner.nextInt();
+	        scanner.nextLine();
+
+	        System.out.print("Enter color: ");
+	        String color = scanner.nextLine();
+	        System.out.print("Enter length: ");
+	        double length = scanner.nextDouble();
+	        System.out.print("Enter width: ");
+	        double width = scanner.nextDouble();
+	        scanner.nextLine();
+
+	        if (type == 1) {
+	            circus.addBuilding(new Arena(color, length, width));
+	        } else if (type == 2) {
+	            circus.addBuilding(new TicketingOffice(color, length, width));
+	        } else {
+	            System.out.println("Invalid building type.");
+	        }
+	    }
+
+
+
+
+
+    private static void handleGenerateTicket(Scanner scanner) {
+        double totalAmount = 0;
+        double basePrice;
+        StringBuilder ticketDetails = new StringBuilder();
+        boolean addMoreTickets = true;
+
+        System.out.print("\nEnter ticket base price: ");
+        basePrice = scanner.nextDouble();
+        scanner.nextLine();
+
+        ticketDetails.append(String.format("Regular ticket price: $%.2f%n%n", basePrice));
+
+        while (addMoreTickets) {
+            // Select day of the week
+            System.out.println("\nSelect day of the week:");
+            for (int i = 0; i < DaysOfWeek.values().length; i++) {
+                DaysOfWeek day = DaysOfWeek.values()[i];
+                if (day.getDiscount() > 0) {
+                    System.out.printf("%d. %s (%.0f%% discount)%n", i + 1, day, day.getDiscount() * 100);
+                } else {
+                    System.out.printf("%d. %s%n", i + 1, day);
+                }
+            }
+            System.out.print("\nEnter your choice: ");
+            int dayChoice = scanner.nextInt();
+            scanner.nextLine();
+
+            if (dayChoice < 1 || dayChoice > DaysOfWeek.values().length) {
+                System.out.println("Invalid choice. Please select a valid day.");
+                continue;
+            }
+
+            DaysOfWeek selectedDay = DaysOfWeek.values()[dayChoice - 1];
+            double dayDiscount = selectedDay.getDiscount();
+
+            // Select customer type
+            System.out.println("\nEnter customer type:");
+            System.out.println("1. Child (10% discount)");
+            System.out.println("2. Student (10% discount)");
+            System.out.println("3. Adult");
+            System.out.println("4. Senior (5% discount)");
+            System.out.print("\nEnter your choice: ");
+            int customerType = scanner.nextInt();
+            scanner.nextLine();
+
+            double customerDiscount = 0.0;
+            String customerTypeName = "";
+            switch (customerType) {
+                case 1:
+                    customerDiscount = 0.10;
+                    customerTypeName = "child";
+                    break;
+                case 2:
+                    customerDiscount = 0.10;
+                    customerTypeName = "student";
+                    break;
+                case 3:
+                    customerTypeName = "adult";
+                    break;
+                case 4:
+                    customerDiscount = 0.05;
+                    customerTypeName = "senior";
+                    break;
+                default:
+                    System.out.println("Invalid customer type. Please try again.");
+                    continue;
+            }
+
+            // Select seat location
+            System.out.println("\nSeat Location in the Arena:");
+            System.out.println("1. Lower level");
+            System.out.println("2. T-level (double ticket price)");
+            System.out.println("3. Upper level (5% discount)");
+            System.out.print("\nEnter your choice: ");
+            int seatLocation = scanner.nextInt();
+            scanner.nextLine();
+
+            double seatMultiplier = (seatLocation == 2) ? 2.0 : 1.0;
+            double seatDiscount = (seatLocation == 3) ? 0.05 : 0.0;
+
+            System.out.print("Enter number of tickets: ");
+            int numberOfTickets = scanner.nextInt();
+            scanner.nextLine();
+
+           
+            
+            double price = basePrice * seatMultiplier;
+            double totalDiscount = dayDiscount + customerDiscount + seatDiscount;
+            price = price - (price * totalDiscount);
+
+            totalAmount += price * numberOfTickets;
+
+            ticketDetails.append(String.format(
+                    "%d %s $%.2f (Day: %s, Day Discount: %.0f%%, Customer Type Discount: %.0f%%)%n",
+                    numberOfTickets, customerTypeName, price * numberOfTickets,
+                    selectedDay, dayDiscount * 100, customerDiscount * 100
+            ));
+
+            // Ask user to add more tickets
+            System.out.print("\nDo you want to add more tickets? (y/n): ");
+            String response = scanner.nextLine().trim().toLowerCase();
+            addMoreTickets = response.equals("y");
+        }
+
+        // Display ticket calculation details
+        System.out.println("\nTicket Calculation Details:");
+        System.out.println("---------------------------");
+        System.out.println(ticketDetails);
+
+        // Display final total amount
+        System.out.printf("Final Total Amount: $%.2f%n", totalAmount);
+        System.out.println("Enjoy the show!");
+    }
+
+
+   
+	}
+
+
